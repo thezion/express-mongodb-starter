@@ -9,7 +9,7 @@
         "dev": "nodemon",
         "lint": "eslint src/* --ext .ts --fix",
         "build": "tsc --listEmittedFiles",
-        "serve": "pm2 delete all & tsc --listEmittedFiles && pm2 start dist/index.js -i max",
+        "serve": "pm2 flush & pm2 delete all & tsc --listEmittedFiles && pm2 start",
         "stop": "pm2 delete all"
     },
     "devDependencies": {

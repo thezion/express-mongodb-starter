@@ -1,10 +1,18 @@
-import mongoose, { Connection } from 'mongoose';
+import mongoose from 'mongoose';
 
-export function connect(): Promise<any> {
+export async function connect(): Promise<boolean> {
+    const connectString = process.env.MONGODB_CONNECT_STRING || '';
+
+    // check connect string
+    if (!connectString) {
+        console.warn('MongoDB can not find a connect string.');
+        return Promise.resolve(false);
+    }
+
     // check connection
     if (mongoose.connection.readyState) {
         console.log('MongoDB already connected.');
-        return Promise.resolve();
+        return Promise.resolve(true);
     }
 
     // events
@@ -16,9 +24,10 @@ export function connect(): Promise<any> {
     });
 
     // start to connect
-    const connectString = process.env.MONGODB_CONNECT_STRING || '';
-    return mongoose.connect(connectString, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+    return mongoose
+        .connect(connectString, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+        .then(() => true);
 }
