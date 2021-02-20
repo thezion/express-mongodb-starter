@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #create our working directory if it doesnt exist
-DIR="/home/ec2-user/express-app"
+DIR="/home/ubuntu/express-app"
 if [ -d "$DIR" ]; then
   echo "${DIR} exists"
 else
