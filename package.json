@@ -5,12 +5,15 @@
     "main": "dist/index.js",
     "author": "John Long",
     "license": "ISC",
+    "engines": {
+        "node": "12.x"
+    },
     "scripts": {
         "dev": "nodemon",
         "lint": "eslint src/* --ext .ts --fix",
         "build": "tsc --listEmittedFiles",
-        "serve": "pm2 flush & pm2 delete all & tsc --listEmittedFiles && pm2 start",
-        "serve:docker": "tsc --listEmittedFiles && pm2-runtime dist/index.js",
+        "start": "pm2 flush & pm2 delete all & pm2 start",
+        "start:docker": "tsc --listEmittedFiles && pm2-runtime dist/index.js",
         "stop": "pm2 delete all"
     },
     "devDependencies": {
