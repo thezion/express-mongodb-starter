@@ -10,6 +10,7 @@
         "lint": "eslint src/* --ext .ts --fix",
         "build": "tsc --listEmittedFiles",
         "serve": "pm2 flush & pm2 delete all & tsc --listEmittedFiles && pm2 start",
+        "serve:docker": "pm2 flush & pm2 delete all & tsc --listEmittedFiles && pm2-runtime start",
         "stop": "pm2 delete all"
     },
     "devDependencies": {
