@@ -1,9 +1,10 @@
 import os from 'os';
 import express from 'express';
 import mongoose from 'mongoose';
-import JsonRes from '../classes/JsonRes.class';
+import createJson from '../libraries/createJson';
 
 const router = express.Router();
+
 router.get('/', (req, res) => {
     const data = {
         ip: req.socket.remoteAddress,
@@ -14,7 +15,7 @@ router.get('/', (req, res) => {
             readyState: mongoose.connection.readyState,
         },
     };
-    res.send(new JsonRes(data));
+    res.send(createJson(data));
 });
 
 export default router;

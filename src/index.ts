@@ -3,7 +3,6 @@ import initializeServer from './initializeServer';
 import * as database from './libraries/database';
 import router from './routers/index';
 
-// load env vars
 dotenv.config();
 
 database
