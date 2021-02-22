@@ -14,15 +14,14 @@ import helmet from 'helmet';
 import compression from 'compression';
 
 // Custom
+import mongoose from 'mongoose';
 import HttpError from './classes/HttpError.class';
 import errorHandler from './middlewares/errorHandler';
-import mongoose from 'mongoose';
 
-export default function initializeServer(router: Router) {
+export default function createExpressApp(router: Router) {
     const app = express();
     const isProduction = process.env.NODE_ENV === 'production';
     const origin = { origin: isProduction ? false : '*' };
-    const error404 = new HttpError('Route Not Found', 404);
 
     app.set('trust proxy', 1);
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,7 +33,7 @@ export default function initializeServer(router: Router) {
 
     // set up routes
     app.get('/', (req, res) => {
-        if (mongoose.connection.readyState != 1) {
+        if (mongoose.connection.readyState !== 1) {
             throw new HttpError('Database Is Not Connected', 500);
         }
         res.sendStatus(200);
@@ -43,7 +42,7 @@ export default function initializeServer(router: Router) {
 
     // 404 handler
     app.use(() => {
-        throw error404;
+        throw new HttpError('Route Not Found', 404);
     });
 
     // error handler

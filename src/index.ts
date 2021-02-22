@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import initializeServer from './initializeServer';
+import createExpressApp from './createExpressApp';
 import * as database from './libraries/database';
 import router from './routers/index';
 
@@ -9,7 +9,7 @@ database
     .connect()
     .then(() => {
         const port = process.env.PORT || 80;
-        const app = initializeServer(router);
+        const app = createExpressApp(router);
         app.listen(port, () => console.log(`Server running on port ${port}`));
     })
     .catch(() => {

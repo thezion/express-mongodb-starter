@@ -49,12 +49,11 @@ schema.pre<UserDocument>('save', async function preSave(next) {
 schema.methods.getJwt = function () {
     const model = this;
     const JWT_SECRET = process.env.JWT_SECRET || '';
-    return jsonwebtoken.sign({ _id: model._id }, JWT_SECRET, {
-        expiresIn: '7d',
-    });
+    const data = { _id: model._id };
+    return jsonwebtoken.sign(data, JWT_SECRET, { expiresIn: '7d' });
 };
 
-schema.methods.getBasicFields = function _transform() {
+schema.methods.getBasicFields = function () {
     // if (this.group) {
     //     await this.populate('group').execPopulate();
     // }

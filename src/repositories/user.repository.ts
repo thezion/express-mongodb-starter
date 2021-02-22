@@ -27,6 +27,15 @@ export async function getUserById(userId: string) {
     }
 }
 
+export async function getUserByEmail(email: string) {
+    try {
+        const user = await UserModel.findOne({ email });
+        return user;
+    } catch (error) {
+        return null;
+    }
+}
+
 export async function getUserList() {
     const users = await UserModel.find({}, null, { sort: { _id: 1 }, limit: 20 });
     return users;
@@ -35,4 +44,10 @@ export async function getUserList() {
 export async function getUserCount() {
     const count = await UserModel.countDocuments();
     return count;
+}
+
+export async function create(params: object) {
+    const user = new UserModel(params);
+    await user.save();
+    return user;
 }

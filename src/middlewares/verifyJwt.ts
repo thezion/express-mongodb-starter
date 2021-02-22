@@ -5,7 +5,7 @@ import HttpError from '../classes/HttpError.class';
 const error401 = new HttpError('Unauthorized', 401);
 
 export default function verifyJwt(req: Request, res: Response, next: NextFunction): void {
-    // Gather the jwt access token from the request header
+    // Gather the JWT from the request header
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1];
     const secert = process.env.JWT_SECRET || '';

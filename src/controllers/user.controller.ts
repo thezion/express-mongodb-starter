@@ -9,13 +9,13 @@ export async function getList(req: Request, res: Response) {
     res.send(createJson(data));
 }
 
-export async function getById(req: Request, res: Response, next: NextFunction) {
+export async function getById(req: Request, res: Response) {
     const { userId } = req.params;
     const user = await repo.getUserById(userId);
     if (user) {
         const data = user.getBasicFields();
         res.send(createJson(data));
     } else {
-        next(new HttpError(`User ${userId} Not Found`, 404));
+        throw new HttpError(`User ${userId} Not Found`, 404);
     }
 }
