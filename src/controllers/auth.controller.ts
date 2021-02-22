@@ -12,6 +12,6 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
         };
         res.send(createJson(data));
     } else {
-        next(new HttpError('Password Does Not Match / User Does Not Exist.', 400));
+        next(new HttpError('Password Does Not Match / User Does Not Exist', 400));
     }
 }

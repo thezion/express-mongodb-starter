@@ -3,7 +3,6 @@ import jsonwebtoken from 'jsonwebtoken';
 import HttpError from '../classes/HttpError.class';
 
 const error401 = new HttpError('Unauthorized', 401);
-const error403 = new HttpError('Forbidden - Failed To Verify Token', 403);
 
 export default function verifyJwt(req: Request, res: Response, next: NextFunction): void {
     // Gather the jwt access token from the request header
@@ -14,13 +13,13 @@ export default function verifyJwt(req: Request, res: Response, next: NextFunctio
     if (token && secert) {
         jsonwebtoken.verify(token, secert, (err, decoded) => {
             if (err) {
-                next(error403);
+                throw error401;
             } else {
                 (req as any).user = decoded;
                 next();
             }
         });
     } else {
-        next(error401);
+        throw error401;
     }
 }

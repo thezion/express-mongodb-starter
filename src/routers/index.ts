@@ -8,7 +8,7 @@ import users from './users';
 
 const router = express.Router();
 
-router.use('/status', status);
+router.use('/', status);
 router.use('/auth', auth);
 router.use('/users', verifyJwt, users);
 

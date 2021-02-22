@@ -13,10 +13,10 @@ import helmet from 'helmet';
 // Node.js compression middleware, support deflate | gzip
 import compression from 'compression';
 
-// Custom - HttpError
+// Custom
 import HttpError from './classes/HttpError.class';
-// Custom - error handler
 import errorHandler from './middlewares/errorHandler';
+import mongoose from 'mongoose';
 
 export default function initializeServer(router: Router) {
     const app = express();
@@ -33,12 +33,17 @@ export default function initializeServer(router: Router) {
     app.use(compression());
 
     // set up routes
-    app.get('/', (req, res) => res.redirect('/api/status'));
+    app.get('/', (req, res) => {
+        if (mongoose.connection.readyState != 1) {
+            throw new HttpError('Database Is Not Connected', 500);
+        }
+        res.sendStatus(200);
+    });
     app.use('/api', router);
 
     // 404 handler
-    app.use((req, res, next) => {
-        next(error404);
+    app.use(() => {
+        throw error404;
     });
 
     // error handler
